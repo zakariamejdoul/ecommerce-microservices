@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MongoDB - client_db@localhost" uuid="3f4ea512-2ce0-4944-bf48-50e0c24c7f1f">
+      <database-info product="Mongo DB" version="4.4.2" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.9.1" dbms="MONGO" exact-version="4.4.2" exact-driver-version="1.9" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

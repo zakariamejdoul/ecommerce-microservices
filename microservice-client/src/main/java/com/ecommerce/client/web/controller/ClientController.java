@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/client")
@@ -23,29 +24,38 @@ public class ClientController {
     public ResponseEntity<Client> addNewUser(@RequestBody Client client) {
         try {
             Client _client = clientDao.save(new Client(client.getLogin(), client.getPassword(), Role.user));
-            return new ResponseEntity<>(_client,HttpStatus.CREATED);
-        }catch (Exception e){
+            return new ResponseEntity<>(_client, HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity<List<Client>> getAllClients(@RequestParam(required = false) Role role){
+    public ResponseEntity<List<Client>> getAllClients(@RequestParam(required = false) Role role) {
         try {
             List<Client> clients = new ArrayList<Client>();
 
-            if(role==null)
+            if (role == null)
                 clientDao.findAll().forEach(clients::add);
             else
                 clientDao.findByRole(role).forEach(clients::add);
 
-            if(clients.isEmpty())
+            if (clients.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
             return new ResponseEntity<>(clients, HttpStatus.OK);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Client> getClientById(@PathVariable("id") String id) {
+        Optional<Client> clientData = clientDao.findById(id);
+
+        return clientData.map(client -> new ResponseEntity<>(client, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }
