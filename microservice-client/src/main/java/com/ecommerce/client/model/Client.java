@@ -1,15 +1,16 @@
 package com.ecommerce.client.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+@Document(collection = "clients")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String id;
+
     private String login;
     private String password;
     private Role role;
@@ -17,8 +18,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(Integer id, String lg, String pass, Role rl) {
-        this.id = id;
+    public Client(String lg, String pass, Role rl) {
         this.login = lg;
         this.password = pass;
         this.role = rl;
@@ -36,11 +36,11 @@ public class Client {
         return role;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ecommerce-microservices.iml" filepath="$PROJECT_DIR$/.idea/ecommerce-microservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservice-auth/auth.iml" filepath="$PROJECT_DIR$/microservice-auth/auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservice-client/client.iml" filepath="$PROJECT_DIR$/microservice-client/client.iml" />
     </modules>
   </component>
 </project>
