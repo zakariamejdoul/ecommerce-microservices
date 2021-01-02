@@ -5,8 +5,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_3_0_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_xml_fastinfoset_FastInfoset_1_2_16.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_2_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_2_0_1_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_2_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_txw2_2_3_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jvnet_staxex_stax_ex_1_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_4_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_5_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_5_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_test_5_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_5_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/ClientDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/RoleDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/model/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/model/ERole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/model/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/payload/request/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/payload/request/SignUpRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/payload/response/JwtResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/payload/response/MessageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/jwt/AuthEntryPointJwt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/jwt/AuthTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/jwt/JwtUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/services/UserDetailsImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/services/UserDetailsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-auth/src/main/resources/META-INF/additional-spring-configuration-metadata.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/dao/RoleDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/model/ERole.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/dao/ClientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/dao/ClientDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/model/Role.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +56,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="spring-beans.schema" />
+        <option value="Class" />
+        <option value="Enum" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -77,6 +119,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ClientApplication">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="generated-requests#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -114,7 +169,7 @@
       <updated>1609445903815</updated>
       <workItem from="1609445906198" duration="651000" />
       <workItem from="1609446679862" duration="27084000" />
-      <workItem from="1609603412336" duration="657000" />
+      <workItem from="1609603412336" duration="22335000" />
     </task>
     <task id="LOCAL-00001" summary="properties">
       <created>1609447183417</created>
@@ -144,7 +199,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609528124734</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="client ms">
+      <created>1609604491717</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1609604491717</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,6 +227,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="properties" />
     <MESSAGE value="Client" />
-    <option name="LAST_COMMIT_MESSAGE" value="Client" />
+    <MESSAGE value="client ms" />
+    <option name="LAST_COMMIT_MESSAGE" value="client ms" />
   </component>
 </project>
