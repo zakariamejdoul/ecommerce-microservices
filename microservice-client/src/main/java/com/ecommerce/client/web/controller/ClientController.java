@@ -58,4 +58,18 @@ public class ClientController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable("id") String id, @RequestBody Client client ) {
+        Optional<Client> clientData = clientDao.findById(id);
+
+        if(clientData.isPresent()){
+            Client _client = clientData.get();
+            _client.setLogin(client.getLogin());
+            _client.setPassword(client.getPassword());
+            return new ResponseEntity<>(clientDao.save(_client), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

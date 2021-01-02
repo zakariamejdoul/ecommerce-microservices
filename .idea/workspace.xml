@@ -77,17 +77,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ClientApplication">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="generated-requests#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -124,7 +113,8 @@
       <option name="presentableId" value="Default" />
       <updated>1609445903815</updated>
       <workItem from="1609445906198" duration="651000" />
-      <workItem from="1609446679862" duration="25881000" />
+      <workItem from="1609446679862" duration="27084000" />
+      <workItem from="1609603412336" duration="657000" />
     </task>
     <task id="LOCAL-00001" summary="properties">
       <created>1609447183417</created>
@@ -147,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609526388720</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Client">
+      <created>1609528124734</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1609528124734</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +160,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="properties" />
