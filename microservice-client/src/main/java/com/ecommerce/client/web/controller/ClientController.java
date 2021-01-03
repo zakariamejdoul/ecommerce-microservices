@@ -119,15 +119,28 @@ public class ClientController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable("id") String id, @RequestBody Client client ) {
+    public ResponseEntity<?> updateClient(@PathVariable("id") String id, @RequestBody Client signUpRequest) {
         Optional<Client> clientData = clientDao.findById(id);
 
-        if(clientData.isPresent()){
+        if (clientData.isPresent()) {
+            if (clientDao.existsByUsername(signUpRequest.getUsername())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Username is already taken!"));
+            }
+
+            if (clientDao.existsByEmail(signUpRequest.getEmail())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Email is already in use!"));
+            }
+
             Client _client = clientData.get();
-            _client.setUsername(client.getUsername());
-            _client.setPassword(client.getPassword());
+            _client.setUsername(signUpRequest.getUsername());
+            _client.setEmail(signUpRequest.getEmail());
+            _client.setPassword(encoder.encode(signUpRequest.getPassword()));
             return new ResponseEntity<>(clientDao.save(_client), HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
