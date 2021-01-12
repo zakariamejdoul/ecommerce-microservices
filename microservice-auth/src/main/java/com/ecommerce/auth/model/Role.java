@@ -1,4 +1,4 @@
-package com.ecommerce.client.model;
+package com.ecommerce.auth.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

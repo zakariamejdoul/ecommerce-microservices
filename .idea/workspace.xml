@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-promotion/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-promotion/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-promotion/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-promotion/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,14 +76,18 @@
       <command value="mvn spring-boot:run" />
     </option>
   </component>
-  <component name="RunDashboard">
-    <option name="configurationTypes">
-      <set>
-        <option value="SpringBootApplicationConfigurationType" />
-      </set>
-    </option>
-  </component>
   <component name="RunManager" selected="Spring Boot.ClientApplication">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="generated-requests#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -124,10 +125,6 @@
       <updated>1609445903815</updated>
       <workItem from="1609445906198" duration="651000" />
       <workItem from="1609446679862" duration="25881000" />
-      <workItem from="1609600140260" duration="430000" />
-      <workItem from="1609600590563" duration="166000" />
-      <workItem from="1609600773224" duration="3130000" />
-      <workItem from="1609675063371" duration="510000" />
     </task>
     <task id="LOCAL-00001" summary="properties">
       <created>1609447183417</created>
@@ -166,7 +163,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="properties" />
