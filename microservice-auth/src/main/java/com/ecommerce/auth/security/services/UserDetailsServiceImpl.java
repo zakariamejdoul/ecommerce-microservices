@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:3001/api/client/username")
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://microservice-client/api/client/username")
                 .queryParam("username", username);
         HttpEntity<SignUpRequest> entity = new HttpEntity<SignUpRequest>(headers);
         Client user = restTemplate.getForObject(builder.toUriString(),Client.class, entity);

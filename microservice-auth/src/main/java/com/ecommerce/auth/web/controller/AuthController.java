@@ -66,9 +66,9 @@ public class AuthController {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<SignUpRequest> entity = new HttpEntity<SignUpRequest>(signUpRequest,headers);
 
-        String message = restTemplate.exchange(
-                "http://localhost:3001/api/client/add", HttpMethod.POST, entity, String.class).getBody();
+        String message = restTemplate.postForObject(
+                "http://microservice-client/api/client/add", entity, String.class);
 
-        return ResponseEntity.ok(new MessageResponse(message));
+        return ResponseEntity.ok(message);
     }
 }
