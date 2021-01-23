@@ -1,7 +1,7 @@
 package com.ecommerce.client.web.controller;
 
 
-import com.ecommerce.auth.payload.response.MessageResponse;
+import com.ecommerce.client.payload.request.MessageResponse;
 import com.ecommerce.client.dao.ClientDao;
 import com.ecommerce.client.dao.RoleDao;
 import com.ecommerce.client.model.Client;
