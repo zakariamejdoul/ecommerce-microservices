@@ -1,0 +1,298 @@
+Index: microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.client.web.controller;\r\n\r\n\r\nimport com.ecommerce.auth.payload.response.MessageResponse;\r\nimport com.ecommerce.client.dao.ClientDao;\r\nimport com.ecommerce.client.dao.RoleDao;\r\nimport com.ecommerce.client.model.Client;\r\nimport com.ecommerce.client.model.ERole;\r\nimport com.ecommerce.client.model.Role;\r\nimport com.ecommerce.client.payload.request.SignUpRequest;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.context.annotation.Bean;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\r\nimport org.springframework.security.crypto.password.PasswordEncoder;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport javax.validation.Valid;\r\nimport java.util.*;\r\n\r\n@RestController\r\n@RequestMapping(path = \"/api/client\")\r\npublic class ClientController {\r\n\r\n    @Autowired\r\n    private ClientDao clientDao;\r\n\r\n    @Autowired\r\n    private RoleDao roleDao;\r\n\r\n    @Bean\r\n    public PasswordEncoder passwordEncoder() {\r\n        return new BCryptPasswordEncoder();\r\n    }\r\n\r\n    @Autowired\r\n    PasswordEncoder encoder;\r\n\r\n\r\n    @PostMapping(path = \"/add\")\r\n    public ResponseEntity<?> addNewUser(@Valid @RequestBody SignUpRequest signUpRequest) {\r\n        if (clientDao.existsByUsername(signUpRequest.getUsername())) {\r\n            return ResponseEntity\r\n                    .badRequest()\r\n                    .body(new MessageResponse(\"Error: Username is already taken!\"));\r\n        }\r\n\r\n        if (clientDao.existsByEmail(signUpRequest.getEmail())) {\r\n            return ResponseEntity\r\n                    .badRequest()\r\n                    .body(new MessageResponse(\"Error: Email is already in use!\"));\r\n        }\r\n\r\n        // Create new user\r\n        Client user = new Client(signUpRequest.getUsername(),\r\n                signUpRequest.getEmail(),\r\n                encoder.encode(signUpRequest.getPassword()));\r\n\r\n        Set<String> strRoles = signUpRequest.getRoles();\r\n        Set<Role> roles = new HashSet<>();\r\n\r\n        if (strRoles == null) {\r\n            Role userRole = roleDao.findByName(ERole.ROLE_USER)\r\n                    .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n            roles.add(userRole);\r\n        } else {\r\n            strRoles.forEach(role -> {\r\n                switch (role) {\r\n                    case \"admin\" -> {\r\n                        Role adminRole = roleDao.findByName(ERole.ROLE_ADMIN)\r\n                                .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n                        roles.add(adminRole);\r\n                    }\r\n                    case \"mod\" -> {\r\n                        Role modRole = roleDao.findByName(ERole.ROLE_MODERATOR)\r\n                                .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n                        roles.add(modRole);\r\n                    }\r\n                    default -> {\r\n                        Role userRole = roleDao.findByName(ERole.ROLE_USER)\r\n                                .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n                        roles.add(userRole);\r\n                    }\r\n                }\r\n            });\r\n        }\r\n        user.setRoles(roles);\r\n        clientDao.save(user);\r\n\r\n        return ResponseEntity.ok(new MessageResponse(\"User registered successfully!\"));\r\n    }\r\n\r\n    @GetMapping(path = \"/all\")\r\n    public ResponseEntity<List<Client>> getAllClients() {\r\n        try {\r\n            List<Client> clients = new ArrayList<Client>();\r\n\r\n\r\n            clients.addAll(clientDao.findAll());\r\n\r\n\r\n            if (clients.isEmpty())\r\n                return new ResponseEntity<>(HttpStatus.NO_CONTENT);\r\n\r\n            return new ResponseEntity<>(clients, HttpStatus.OK);\r\n\r\n        } catch (Exception e) {\r\n            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);\r\n        }\r\n    }\r\n\r\n    @GetMapping(path = \"/{id}\")\r\n    public ResponseEntity<Client> getClientById(@PathVariable(\"id\") String id) {\r\n        Optional<Client> clientData = clientDao.findById(id);\r\n\r\n        return clientData.map(client -> new ResponseEntity<>(client, HttpStatus.OK))\r\n                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));\r\n    }\r\n\r\n    @PutMapping(path = \"/{id}\")\r\n    public ResponseEntity<?> updateClient(@PathVariable(\"id\") String id, @RequestBody Client signUpRequest) {\r\n        Optional<Client> clientData = clientDao.findById(id);\r\n\r\n        if (clientData.isPresent()) {\r\n            if (clientDao.existsByUsername(signUpRequest.getUsername())) {\r\n                return ResponseEntity\r\n                        .badRequest()\r\n                        .body(new MessageResponse(\"Error: Username is already taken!\"));\r\n            }\r\n\r\n            if (clientDao.existsByEmail(signUpRequest.getEmail())) {\r\n                return ResponseEntity\r\n                        .badRequest()\r\n                        .body(new MessageResponse(\"Error: Email is already in use!\"));\r\n            }\r\n\r\n            Client _client = clientData.get();\r\n            _client.setUsername(signUpRequest.getUsername());\r\n            _client.setEmail(signUpRequest.getEmail());\r\n            _client.setPassword(encoder.encode(signUpRequest.getPassword()));\r\n            return new ResponseEntity<>(clientDao.save(_client), HttpStatus.OK);\r\n        } else {\r\n            return new ResponseEntity<>(HttpStatus.NOT_FOUND);\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java b/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java
+--- a/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java	(revision caecff4490edd29246ad25b3d25a793f3393e7ae)
++++ b/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java	(date 1611362797731)
+@@ -1,7 +1,7 @@
+ package com.ecommerce.client.web.controller;
+ 
+ 
+-import com.ecommerce.auth.payload.response.MessageResponse;
++import com.ecommerce.client.payload.request.MessageResponse;
+ import com.ecommerce.client.dao.ClientDao;
+ import com.ecommerce.client.dao.RoleDao;
+ import com.ecommerce.client.model.Client;
+Index: microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.auth;\r\n\r\nimport org.springframework.boot.SpringApplication;\r\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\r\n\r\n@SpringBootApplication\r\npublic class AuthApplication {\r\n\r\n    public static void main(String[] args) {\r\n        SpringApplication.run(AuthApplication.class, args);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java b/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java
+--- a/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java	(revision caecff4490edd29246ad25b3d25a793f3393e7ae)
++++ b/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java	(date 1611361923026)
+@@ -2,6 +2,8 @@
+ 
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.context.annotation.Bean;
++import org.springframework.web.client.RestTemplate;
+ 
+ @SpringBootApplication
+ public class AuthApplication {
+@@ -10,4 +12,9 @@
+         SpringApplication.run(AuthApplication.class, args);
+     }
+ 
++    @Bean
++    public RestTemplate getRestTemplate() {
++        return new RestTemplate();
++    }
++
+ }
+Index: microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.auth.web.controller;\r\n\r\n\r\nimport com.ecommerce.auth.dao.ClientDao;\r\nimport com.ecommerce.auth.dao.RoleDao;\r\nimport com.ecommerce.auth.model.Client;\r\nimport com.ecommerce.auth.model.ERole;\r\nimport com.ecommerce.auth.model.Role;\r\nimport com.ecommerce.auth.payload.request.LoginRequest;\r\nimport com.ecommerce.auth.payload.request.SignUpRequest;\r\nimport com.ecommerce.auth.payload.response.JwtResponse;\r\nimport com.ecommerce.auth.payload.response.MessageResponse;\r\nimport com.ecommerce.auth.security.jwt.JwtUtils;\r\nimport com.ecommerce.auth.security.services.UserDetailsImpl;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.security.authentication.AuthenticationManager;\r\nimport org.springframework.security.authentication.UsernamePasswordAuthenticationToken;\r\nimport org.springframework.security.core.Authentication;\r\nimport org.springframework.security.core.GrantedAuthority;\r\nimport org.springframework.security.core.context.SecurityContextHolder;\r\nimport org.springframework.security.crypto.password.PasswordEncoder;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport javax.validation.Valid;\r\nimport java.util.HashSet;\r\nimport java.util.List;\r\nimport java.util.Set;\r\nimport java.util.stream.Collectors;\r\n\r\n@CrossOrigin(origins = \"*\", maxAge = 3600)\r\n@RestController\r\n@RequestMapping(\"/api/auth\")\r\npublic class AuthController {\r\n    @Autowired\r\n    AuthenticationManager authenticationManager;\r\n\r\n    @Autowired\r\n    ClientDao userRepository;\r\n\r\n    @Autowired\r\n    RoleDao roleRepository;\r\n\r\n    @Autowired\r\n    PasswordEncoder encoder;\r\n\r\n    @Autowired\r\n    JwtUtils jwtUtils;\r\n\r\n    @PostMapping(\"/signin\")\r\n    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {\r\n\r\n        Authentication authentication = authenticationManager.authenticate(\r\n                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));\r\n\r\n        SecurityContextHolder.getContext().setAuthentication(authentication);\r\n        String jwt = jwtUtils.generateJwtToken(authentication);\r\n\r\n        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();\r\n        List<String> roles = userDetails.getAuthorities().stream()\r\n                .map(GrantedAuthority::getAuthority)\r\n                .collect(Collectors.toList());\r\n\r\n        return ResponseEntity.ok(new JwtResponse(jwt,\r\n                userDetails.getId(),\r\n                userDetails.getUsername(),\r\n                userDetails.getEmail(),\r\n                roles));\r\n    }\r\n\r\n    @PostMapping(\"/signup\")\r\n    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {\r\n        if (userRepository.existsByUsername(signUpRequest.getUsername())) {\r\n            return ResponseEntity\r\n                    .badRequest()\r\n                    .body(new MessageResponse(\"Error: Username is already taken!\"));\r\n        }\r\n\r\n        if (userRepository.existsByEmail(signUpRequest.getEmail())) {\r\n            return ResponseEntity\r\n                    .badRequest()\r\n                    .body(new MessageResponse(\"Error: Email is already in use!\"));\r\n        }\r\n\r\n        // Create new user's account\r\n        Client user = new Client(signUpRequest.getUsername(),\r\n                signUpRequest.getEmail(),\r\n                encoder.encode(signUpRequest.getPassword()));\r\n\r\n        Set<String> strRoles = signUpRequest.getRoles();\r\n        Set<Role> roles = new HashSet<>();\r\n\r\n        if (strRoles == null) {\r\n            Role userRole = roleRepository.findByName(ERole.ROLE_USER)\r\n                    .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n            roles.add(userRole);\r\n        } else {\r\n            strRoles.forEach(role -> {\r\n                switch (role) {\r\n                    case \"admin\" -> {\r\n                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)\r\n                                .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n                        roles.add(adminRole);\r\n                    }\r\n                    case \"mod\" -> {\r\n                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)\r\n                                .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n                        roles.add(modRole);\r\n                    }\r\n                    default -> {\r\n                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)\r\n                                .orElseThrow(() -> new RuntimeException(\"Error: Role is not found.\"));\r\n                        roles.add(userRole);\r\n                    }\r\n                }\r\n            });\r\n        }\r\n\r\n        user.setRoles(roles);\r\n        userRepository.save(user);\r\n\r\n        return ResponseEntity.ok(new MessageResponse(\"User registered successfully!\"));\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java b/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java
+--- a/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java	(revision caecff4490edd29246ad25b3d25a793f3393e7ae)
++++ b/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java	(date 1611362797720)
+@@ -13,7 +13,7 @@
+ import com.ecommerce.auth.security.jwt.JwtUtils;
+ import com.ecommerce.auth.security.services.UserDetailsImpl;
+ import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.ResponseEntity;
++import org.springframework.http.*;
+ import org.springframework.security.authentication.AuthenticationManager;
+ import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+ import org.springframework.security.core.Authentication;
+@@ -21,8 +21,10 @@
+ import org.springframework.security.core.context.SecurityContextHolder;
+ import org.springframework.security.crypto.password.PasswordEncoder;
+ import org.springframework.web.bind.annotation.*;
++import org.springframework.web.client.RestTemplate;
+ 
+ import javax.validation.Valid;
++import java.util.Arrays;
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Set;
+@@ -35,8 +37,10 @@
+     @Autowired
+     AuthenticationManager authenticationManager;
+ 
++    //@Autowired
++    //ClientDao userRepository;
+     @Autowired
+-    ClientDao userRepository;
++    RestTemplate restTemplate;
+ 
+     @Autowired
+     RoleDao roleRepository;
+@@ -70,55 +74,13 @@
+ 
+     @PostMapping("/signup")
+     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+-            return ResponseEntity
+-                    .badRequest()
+-                    .body(new MessageResponse("Error: Username is already taken!"));
+-        }
+-
+-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+-            return ResponseEntity
+-                    .badRequest()
+-                    .body(new MessageResponse("Error: Email is already in use!"));
+-        }
+-
+-        // Create new user's account
+-        Client user = new Client(signUpRequest.getUsername(),
+-                signUpRequest.getEmail(),
+-                encoder.encode(signUpRequest.getPassword()));
+-
+-        Set<String> strRoles = signUpRequest.getRoles();
+-        Set<Role> roles = new HashSet<>();
++        HttpHeaders headers = new HttpHeaders();
++        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
++        HttpEntity<SignUpRequest> entity = new HttpEntity<SignUpRequest>(signUpRequest,headers);
+ 
+-        if (strRoles == null) {
+-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+-            roles.add(userRole);
+-        } else {
+-            strRoles.forEach(role -> {
+-                switch (role) {
+-                    case "admin" -> {
+-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+-                        roles.add(adminRole);
+-                    }
+-                    case "mod" -> {
+-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+-                        roles.add(modRole);
+-                    }
+-                    default -> {
+-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+-                        roles.add(userRole);
+-                    }
+-                }
+-            });
+-        }
++        String message = restTemplate.exchange(
++                "http://localhost:8080/products", HttpMethod.POST, entity, String.class).getBody();
+ 
+-        user.setRoles(roles);
+-        userRepository.save(user);
+-
+-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
++        return ResponseEntity.ok(new MessageResponse(message));
+     }
+ }
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"a77a2924-7252-45c8-9af3-0592d5c1c50c\" name=\"Default Changelist\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"spring-beans.schema\" />\r\n        <option value=\"Class\" />\r\n        <option value=\"Enum\" />\r\n        <option value=\"Interface\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"importingSettings\">\r\n      <MavenImportingSettings>\r\n        <option name=\"jdkForImporter\" value=\"openjdk-15\" />\r\n      </MavenImportingSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedIndex\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1mRACWbbcDVrxcFx2nkNkUPFtMe\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"DatabaseDriversLRU\" value=\"mysql&#10;mongo\" />\r\n    <property name=\"RequestMappingsPanelOrder0\" value=\"0\" />\r\n    <property name=\"RequestMappingsPanelOrder1\" value=\"1\" />\r\n    <property name=\"RequestMappingsPanelWidth0\" value=\"75\" />\r\n    <property name=\"RequestMappingsPanelWidth1\" value=\"75\" />\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/microservice-client\" />\r\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\r\n    <property name=\"project.structure.last.edited\" value=\"Modules\" />\r\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\r\n    <property name=\"project.structure.side.proportion\" value=\"0.2\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"reference.settingsdialog.project.gant\" />\r\n  </component>\r\n  <component name=\"RestClientSettings\">\r\n    <option name=\"REQUEST_HISTORY\">\r\n      <list>\r\n        <RestClientRequest>\r\n          <option name=\"httpMethod\" value=\"GET\" />\r\n          <option name=\"urlBase\" value=\"http://localhost:3001\" />\r\n          <option name=\"urlPath\" value=\"\" />\r\n          <option name=\"textToSend\" value=\"\" />\r\n          <option name=\"filesToSend\" value=\"\" />\r\n        </RestClientRequest>\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"RunAnythingCache\">\r\n    <option name=\"myCommands\">\r\n      <command value=\"mvn clean install\" />\r\n      <command value=\"mvn spring-boot:run\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Spring Boot.ClientApplication\">\r\n    <configuration name=\"generated-requests#1\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"generated-requests#2\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" index=\"2\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"AuthApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\">\r\n      <module name=\"auth\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.ecommerce.auth.AuthApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ClientApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\">\r\n      <module name=\"client\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.ecommerce.client.ClientApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"HTTP Request.generated-requests#2\" />\r\n        <item itemvalue=\"HTTP Request.generated-requests#1\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"a77a2924-7252-45c8-9af3-0592d5c1c50c\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1609445903815</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1609445903815</updated>\r\n      <workItem from=\"1609445906198\" duration=\"651000\" />\r\n      <workItem from=\"1609446679862\" duration=\"27084000\" />\r\n      <workItem from=\"1609603412336\" duration=\"23711000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"properties\">\r\n      <created>1609447183417</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609447183417</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Client\">\r\n      <created>1609514191296</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609514191296</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Client\">\r\n      <created>1609526388720</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609526388720</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Client\">\r\n      <created>1609528124734</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609528124734</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"client ms\">\r\n      <created>1609604491717</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609604491717</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"client &amp; auth changes\">\r\n      <created>1609631706737</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609631706737</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"client &amp; auth changes\">\r\n      <created>1609632779257</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1609632779257</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"8\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"properties\" />\r\n    <MESSAGE value=\"Client\" />\r\n    <MESSAGE value=\"client ms\" />\r\n    <MESSAGE value=\"client &amp; auth changes\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"client &amp; auth changes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision caecff4490edd29246ad25b3d25a793f3393e7ae)
++++ b/.idea/workspace.xml	(date 1611364053824)
+@@ -4,7 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="" />
++    <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="">
++      <change afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/payload/request/MessageResponse.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -14,9 +21,9 @@
+     <option name="RECENT_TEMPLATES">
+       <list>
+         <option value="spring-beans.schema" />
+-        <option value="Class" />
+         <option value="Enum" />
+         <option value="Interface" />
++        <option value="Class" />
+       </list>
+     </option>
+   </component>
+@@ -75,13 +82,27 @@
+       <command value="mvn spring-boot:run" />
+     </option>
+   </component>
+-  <component name="RunManager" selected="Spring Boot.ClientApplication">
++  <component name="RunManager" selected="Spring Boot.AuthApplication">
++    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
++      <option name="arquillianRunConfiguration">
++        <value>
++          <option name="containerStateName" value="" />
++        </value>
++      </option>
++      <option name="TEST_OBJECT" value="class" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
+     <configuration name="generated-requests#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" runType="Run single request">
+       <method v="2" />
+     </configuration>
+     <configuration name="generated-requests#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="2" runType="Run single request">
+       <method v="2" />
+     </configuration>
++    <configuration name="generated-requests#3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" runType="Run single request">
++      <method v="2" />
++    </configuration>
+     <configuration name="AuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+       <module name="auth" />
+       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecommerce.auth.AuthApplication" />
+@@ -98,6 +119,7 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="HTTP Request.generated-requests#3" />
+         <item itemvalue="HTTP Request.generated-requests#2" />
+         <item itemvalue="HTTP Request.generated-requests#1" />
+       </list>
+@@ -164,7 +186,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1609632779257</updated>
+     </task>
+-    <option name="localTasksCounter" value="8" />
++    <task id="LOCAL-00008" summary="client changes">
++      <created>1611360616983</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1611360616983</updated>
++    </task>
++    <option name="localTasksCounter" value="9" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -187,6 +216,7 @@
+     <MESSAGE value="Client" />
+     <MESSAGE value="client ms" />
+     <MESSAGE value="client &amp; auth changes" />
+-    <option name="LAST_COMMIT_MESSAGE" value="client &amp; auth changes" />
++    <MESSAGE value="client changes" />
++    <option name="LAST_COMMIT_MESSAGE" value="client changes" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: microservice-client/src/main/java/com/ecommerce/client/payload/request/MessageResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice-client/src/main/java/com/ecommerce/client/payload/request/MessageResponse.java b/microservice-client/src/main/java/com/ecommerce/client/payload/request/MessageResponse.java
+new file mode 100644
+--- /dev/null	(date 1611362797709)
++++ b/microservice-client/src/main/java/com/ecommerce/client/payload/request/MessageResponse.java	(date 1611362797709)
+@@ -0,0 +1,17 @@
++package com.ecommerce.client.payload.request;
++
++public class MessageResponse {
++    private String message;
++
++    public MessageResponse(String message) {
++        this.message = message;
++    }
++
++    public String getMessage() {
++        return message;
++    }
++
++    public void setMessage(String message) {
++        this.message = message;
++    }
++}
+Index: .idea/httpRequests/http-requests-log.http
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>GET http://localhost:3001\r\n\r\n<> 2021-01-01T190052.404.json\r\n\r\n###\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/httpRequests/http-requests-log.http b/.idea/httpRequests/http-requests-log.http
+--- a/.idea/httpRequests/http-requests-log.http	(revision caecff4490edd29246ad25b3d25a793f3393e7ae)
++++ b/.idea/httpRequests/http-requests-log.http	(date 1611363282841)
+@@ -1,3 +1,7 @@
++GET http://localhost:3001
++
++###
++
+ GET http://localhost:3001
+ 
+ <> 2021-01-01T190052.404.json
