@@ -118,6 +118,14 @@ public class ClientController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping(path = "/username")
+    public ResponseEntity<Client> getClientByUsername(@RequestParam("username") String username) {
+        Optional<Client> clientData = clientDao.findByUsername(username);
+
+        return clientData.map(client -> new ResponseEntity<>(client, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateClient(@PathVariable("id") String id, @RequestBody Client signUpRequest) {
         Optional<Client> clientData = clientDao.findById(id);

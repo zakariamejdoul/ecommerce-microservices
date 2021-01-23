@@ -1,11 +1,6 @@
 package com.ecommerce.auth.web.controller;
 
 
-import com.ecommerce.auth.dao.ClientDao;
-import com.ecommerce.auth.dao.RoleDao;
-import com.ecommerce.auth.model.Client;
-import com.ecommerce.auth.model.ERole;
-import com.ecommerce.auth.model.Role;
 import com.ecommerce.auth.payload.request.LoginRequest;
 import com.ecommerce.auth.payload.request.SignUpRequest;
 import com.ecommerce.auth.payload.response.JwtResponse;
@@ -25,9 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,9 +32,6 @@ public class AuthController {
 
     @Autowired
     RestTemplate restTemplate;
-
-    @Autowired
-    RoleDao roleRepository;
 
     @Autowired
     PasswordEncoder encoder;

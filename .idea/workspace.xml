@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="">
+    <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="connection between /signup &amp; /add">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/ClientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/ClientDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/RoleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/RoleDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/services/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/services/UserDetailsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +32,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -78,7 +86,7 @@
       <command value="mvn spring-boot:run" />
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ClientApplication">
+  <component name="RunManager" selected="Spring Boot.AuthApplication">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -192,7 +200,21 @@
       <option name="project" value="LOCAL" />
       <updated>1611364946871</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="client changes">
+      <created>1611365345475</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611365345475</updated>
+    </task>
+    <task id="LOCAL-00011" summary="connection between /signup &amp; /add">
+      <created>1611366655242</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1611366655242</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,6 +238,7 @@
     <MESSAGE value="client ms" />
     <MESSAGE value="client &amp; auth changes" />
     <MESSAGE value="client changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="client changes" />
+    <MESSAGE value="connection between /signup &amp; /add" />
+    <option name="LAST_COMMIT_MESSAGE" value="connection between /signup &amp; /add" />
   </component>
 </project>
