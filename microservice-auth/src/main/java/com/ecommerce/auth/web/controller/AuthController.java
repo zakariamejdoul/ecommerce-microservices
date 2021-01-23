@@ -4,7 +4,6 @@ package com.ecommerce.auth.web.controller;
 import com.ecommerce.auth.payload.request.LoginRequest;
 import com.ecommerce.auth.payload.request.SignUpRequest;
 import com.ecommerce.auth.payload.response.JwtResponse;
-import com.ecommerce.auth.payload.response.MessageResponse;
 import com.ecommerce.auth.security.jwt.JwtUtils;
 import com.ecommerce.auth.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
