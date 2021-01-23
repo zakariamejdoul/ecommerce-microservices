@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="connection between /signup &amp; /add">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="connection between auth/signin &amp; client/username">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/ClientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/ClientDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/RoleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/dao/RoleDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/services/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/security/services/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/web/controller/ClientController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611366655242</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="connection between auth/signin &amp; client/username">
+      <created>1611371328142</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1611371328142</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,6 +238,7 @@
     <MESSAGE value="client &amp; auth changes" />
     <MESSAGE value="client changes" />
     <MESSAGE value="connection between /signup &amp; /add" />
-    <option name="LAST_COMMIT_MESSAGE" value="connection between /signup &amp; /add" />
+    <MESSAGE value="connection between auth/signin &amp; client/username" />
+    <option name="LAST_COMMIT_MESSAGE" value="connection between auth/signin &amp; client/username" />
   </component>
 </project>
