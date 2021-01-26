@@ -25,4 +25,8 @@ public class StockController {
         }
     }
 
+    public Boolean estSuffisant(String productId,Integer q){
+        return (getProduct(productId).getQuantite() - q) >= 0;
+    }
+
 }
