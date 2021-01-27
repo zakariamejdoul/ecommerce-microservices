@@ -1,10 +1,13 @@
 package com.ecommerce.recherche.dao;
 
+
 import com.ecommerce.recherche.moduls.produit;
 
 import java.util.ArrayList;
 
 public interface ProduitDao {
+
+    public void setProduits(ArrayList<produit> produits);
 
     public ArrayList<produit> rechercheByName(String name);
 

@@ -1,6 +1,7 @@
 package com.ecommerce.recherche.dao;
 
 
+
 import com.ecommerce.recherche.moduls.produit;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,11 @@ public class ProduitDaoCls implements ProduitDao{
         produits.add(new produit("p4","maison 100m","hello","120","oujda","maison","23/5/2019"));
         produits.add(new produit("p5","tele","veuf","3000","casa","tele","6/11/2020"));
 
+    }
+
+    @Override
+    public void setProduits(ArrayList<produit> produits) {
+        ProduitDaoCls.produits = produits;
     }
 
     @Override
