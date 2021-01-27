@@ -1,9 +1,11 @@
 package com.ecommerce.panier.dao;
 
+
 import com.ecommerce.panier.moduls.produit;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+
 @Repository
 public class PanierCls implements PanierDao{
 
@@ -18,7 +20,8 @@ public class PanierCls implements PanierDao{
     }
 
     @Override
-    public ArrayList<produit> ajouterProduit(produit p) {
+    public ArrayList<produit> ajouterProduit(produit p,int quantite) {
+
         ListPannier.add(p);
         return ListPannier;
     }

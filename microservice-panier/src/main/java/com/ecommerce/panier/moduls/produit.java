@@ -9,6 +9,7 @@ public class produit {
     private String ville;
     private String categorie;
     private String date;
+    private int quantite_panier;
 
     // Constructor
     public produit(String id, String titre, String description, String prix, String ville, String categorie, String date) {
@@ -79,5 +80,13 @@ public class produit {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getQuantite_panier() {
+        return quantite_panier;
+    }
+
+    public void setQuantite_panier(int quantite_panier) {
+        this.quantite_panier = quantite_panier;
     }
 }
