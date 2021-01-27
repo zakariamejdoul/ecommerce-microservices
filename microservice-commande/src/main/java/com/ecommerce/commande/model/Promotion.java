@@ -77,7 +77,4 @@ public class Promotion {
                 '}';
     }
 
-    public Integer getPrixPromoted(Integer productId){
-        return productId*5;
-    }
 }

@@ -1,7 +1,7 @@
 package com.ecommerce.commande.model;
 
 public class Commande {
-    private int id;
+    private Integer id;
     private String dateCommande;
     private Boolean commandePayee;
     public Commande() {

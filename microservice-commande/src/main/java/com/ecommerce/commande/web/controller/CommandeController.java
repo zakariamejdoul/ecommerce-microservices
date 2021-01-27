@@ -19,8 +19,7 @@ public class CommandeController {
 
     @GetMapping(value = "/commande/{id}")
     public Commande recupererUneCommande(@PathVariable int id){
-        Commande commande = restTemplate.getForObject("microservice-commande/commande/5)",Commande.class);
-        return new Commande(id, "12/04/2020", Boolean.TRUE);
+        return new Commande(id, "12/04/2020", Boolean.FALSE);
     }
 
     //fonction doit etre dans le model panier ou bien passer dans les parametre 0 1
@@ -29,8 +28,9 @@ public class CommandeController {
     }
     private Integer prixLivraison=10;
 
-    @PostMapping(value = "/commande/{id}/prix")
-    public Integer prixCommande(@PathVariable int id){
+    List<List<Integer>> lisPanier2 = new ArrayList<List<Integer>>();
+
+    public Integer calculPrix(){
         //liste des prix (product*qnt) de la commande num id depuis microservices panier
 
         List<List<Integer>> lisPanier = new ArrayList<List<Integer>>();
@@ -40,20 +40,20 @@ public class CommandeController {
         lisPanier.set(2, p2); //p2 a le id 2 et la quantite 4
 
         // la promotion d un produit depuis microservices promotion
-        List<List<Integer>> lisPanier2 = new ArrayList<List<Integer>>();
         lisPanier.stream().map(product ->{
-            Promotion promotion = restTemplate.getForObject("microservice-promotion/promotion/"+lisPanier.get(5),Promotion.class);
+            Promotion promotion = restTemplate.getForObject("microservice-promotion/promotion/"+product.get(0),Promotion.class);
             List<Integer> p = new ArrayList (promotion.getProduct_id());
             p.add(product.get(1)); //1 inidice de la quantite
-            p.add(promotion.getPrixPromoted(product.get(0))); //0 indice de l id du produit
             lisPanier2.add(p);
             return lisPanier2;
-
         }).collect(Collectors.toList());
 
-
         //combinaison des deux
-        List<Integer> products = Arrays.asList(1, 2, 3, 4, 5); // (prix ou prixpromted) *quantite
+        List<Integer> products = Arrays.asList(); // (prix ou prixpromted) *quantite
+
+        lisPanier2.stream().map(product ->{
+            return products.add((product.get(1)*product.get(2)));
+        }).collect(Collectors.toList());
 
         Integer sum = products.stream()
                 .reduce(0, Integer::sum);
@@ -62,6 +62,10 @@ public class CommandeController {
         }else{
             return sum;
         }
+    }
+    @PostMapping(value = "/commande/{id}/prix")
+    public Integer prixCommande(@PathVariable Integer id){
+            return calculPrix();
     }
 
 }
