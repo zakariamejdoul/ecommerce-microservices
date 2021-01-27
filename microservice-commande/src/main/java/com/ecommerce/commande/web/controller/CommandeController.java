@@ -2,6 +2,7 @@ package com.ecommerce.commande.web.controller;
 
 import com.ecommerce.commande.model.Commande;
 import com.ecommerce.commande.model.Promotion;
+import freemarker.core.ReturnInstruction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -18,20 +19,20 @@ public class CommandeController {
     private RestTemplate restTemplate;
 
     @GetMapping(value = "/commande/{id}")
-    public Commande recupererUneCommande(@PathVariable int id){
-        return new Commande(id, "12/04/2020", Boolean.FALSE);
+    public Commande getCommande(@PathVariable int id){
+        return new Commande(id, "12/04/2020", Boolean.FALSE,Boolean.TRUE);
     }
 
     //fonction doit etre dans le model panier ou bien passer dans les parametre 0 1
-    public Boolean estLivrable(){
-        return true;
-    }
+
     private Integer prixLivraison=10;
 
     List<List<Integer>> lisPanier2 = new ArrayList<List<Integer>>();
 
     public Integer calculPrix(){
+        Commande commande = getCommande(5);
         //liste des prix (product*qnt) de la commande num id depuis microservices panier
+        //return restTemplate.getForObject("microservice-panier/all",Panier.class);
 
         List<List<Integer>> lisPanier = new ArrayList<List<Integer>>();
         List<Integer> p1 = new ArrayList (5); //produit p1 avec quantite 5
@@ -41,9 +42,10 @@ public class CommandeController {
 
         // la promotion d un produit depuis microservices promotion
         lisPanier.stream().map(product ->{
-            Promotion promotion = restTemplate.getForObject("microservice-promotion/promotion/"+product.get(0),Promotion.class);
-            List<Integer> p = new ArrayList (promotion.getProduct_id());
+            Integer pricePromoted = restTemplate.getForObject("microservice-promotion/promotion/"+product.get(0),Integer.class);
+            List<Integer> p = new ArrayList (product.get(0));
             p.add(product.get(1)); //1 inidice de la quantite
+            p.add(pricePromoted);
             lisPanier2.add(p);
             return lisPanier2;
         }).collect(Collectors.toList());
@@ -57,12 +59,13 @@ public class CommandeController {
 
         Integer sum = products.stream()
                 .reduce(0, Integer::sum);
-        if(estLivrable()) {
+        if(commande.getLivrable()) {
             return sum + prixLivraison;
         }else{
             return sum;
         }
     }
+
     @PostMapping(value = "/commande/{id}/prix")
     public Integer prixCommande(@PathVariable Integer id){
             return calculPrix();
