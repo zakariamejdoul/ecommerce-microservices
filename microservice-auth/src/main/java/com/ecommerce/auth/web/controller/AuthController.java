@@ -4,8 +4,11 @@ package com.ecommerce.auth.web.controller;
 import com.ecommerce.auth.payload.request.LoginRequest;
 import com.ecommerce.auth.payload.request.SignUpRequest;
 import com.ecommerce.auth.payload.response.JwtResponse;
+import com.ecommerce.auth.payload.response.MessageResponse;
 import com.ecommerce.auth.security.jwt.JwtUtils;
 import com.ecommerce.auth.security.services.UserDetailsImpl;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -60,14 +63,21 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
+    @HystrixCommand(fallbackMethod = "fallbackRegistering", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"),
+    })
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<SignUpRequest> entity = new HttpEntity<SignUpRequest>(signUpRequest,headers);
+        HttpEntity<SignUpRequest> entity = new HttpEntity<SignUpRequest>(signUpRequest, headers);
 
         String message = restTemplate.postForObject(
                 "http://microservice-client/api/client/add", entity, String.class);
 
         return ResponseEntity.ok(message);
+    }
+
+    private ResponseEntity<?> fallbackRegistering(SignUpRequest signUpRequest) {
+        return ResponseEntity.ok(new MessageResponse("Timeout ! Try to signup again."));
     }
 }
