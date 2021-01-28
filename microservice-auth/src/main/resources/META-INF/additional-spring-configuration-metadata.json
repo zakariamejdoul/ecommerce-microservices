@@ -9,5 +9,11 @@
       "name": "bezkoder.app.jwtExpirationMs",
       "type": "java.lang.String",
       "description": "Description for bezkoder.app.jwtExpirationMs."
+    },
+    {
+      "name": "hystrix.dashboard.proxyStreamAllowList",
+      "type": "java.lang.String",
+      "description": "Description for hystrix.dashboard.proxyStreamAllowList.",
+      "defaultValue": "*"
     }
   ] }

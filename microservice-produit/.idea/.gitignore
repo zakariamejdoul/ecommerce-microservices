@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+<<<<<<< HEAD
+/../../../../../../../../:\Users\user\Documents\GitHub\ecommerce-microservices\microservice-produit\.idea/dataSources/
+=======
+/../../../../../../../:\Users\dell\Desktop\ecommerce-microservices\microservice-produit\.idea/dataSources/
+>>>>>>> 0925780f0a1f92757c20017fef36052e9973bfb8
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

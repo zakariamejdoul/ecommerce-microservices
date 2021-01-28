@@ -1,16 +1,18 @@
 package com.ecommerce.commande.model;
 
 public class Commande {
-    private int id;
+    private Integer id;
     private String dateCommande;
     private Boolean commandePayee;
+    private Boolean livrable;
     public Commande() {
     }
 
-    public Commande(int id, String dateCommande, Boolean commandePayee) {
+    public Commande(int id, String dateCommande, Boolean commandePayee, Boolean livrable) {
         this.id = id;
         this.dateCommande = dateCommande;
         this.commandePayee = commandePayee;
+        this.livrable=livrable;
     }
 
     public int getId() {
@@ -37,6 +39,14 @@ public class Commande {
         this.commandePayee = commandePayee;
     }
 
+    public Boolean getLivrable() {
+        return livrable;
+    }
+
+    public void setLivrable(Boolean livrable) {
+        this.livrable = livrable;
+    }
+
     @Override
     public String toString() {
         return "commande{" +
@@ -45,5 +55,6 @@ public class Commande {
                 ", commandePayee=" + commandePayee +
                 '}';
     }
+
 
 }

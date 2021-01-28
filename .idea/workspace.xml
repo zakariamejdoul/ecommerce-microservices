@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="connection between auth/signin &amp; client/username">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/AuthApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/java/com/ecommerce/auth/web/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-client/src/main/java/com/ecommerce/client/ClientApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/resources/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/resources/META-INF/additional-spring-configuration-metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +34,6 @@
         <option name="jdkForImporter" value="openjdk-15" />
       </MavenImportingSettings>
     </option>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="1mRACWbbcDVrxcFx2nkNkUPFtMe" />
   <component name="ProjectViewState">
@@ -79,7 +75,15 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn spring-boot:run" />
+      <command value="mvn verify" />
       <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ClientApplication">
@@ -91,17 +95,6 @@
       </envs>
       <option name="MAIN_CLASS_NAME" value="com.ecommerce.client.ClientApplication" />
       <module name="client" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -160,6 +153,9 @@
       <workItem from="1609445906198" duration="651000" />
       <workItem from="1609446679862" duration="27084000" />
       <workItem from="1609603412336" duration="23711000" />
+      <workItem from="1611587284875" duration="6068000" />
+      <workItem from="1611760088125" duration="18093000" />
+      <workItem from="1611785610328" duration="1455000" />
     </task>
     <task id="LOCAL-00001" summary="properties">
       <created>1609447183417</created>
@@ -252,7 +248,28 @@
       <option name="project" value="LOCAL" />
       <updated>1611425898889</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="eureka discovery server &amp; load-balancing changes">
+      <created>1611428544097</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1611428544097</updated>
+    </task>
+    <task id="LOCAL-00015" summary="auth changes">
+      <created>1611762749560</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1611762749561</updated>
+    </task>
+    <task id="LOCAL-00016" summary="hystrix commands &amp; dashboard">
+      <created>1611782632879</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1611782632879</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +280,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="github/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -279,6 +308,9 @@
     <MESSAGE value="connection between /signup &amp; /add" />
     <MESSAGE value="connection between auth/signin &amp; client/username" />
     <MESSAGE value="eureka discovery server changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="eureka discovery server changes" />
+    <MESSAGE value="eureka discovery server &amp; load-balancing changes" />
+    <MESSAGE value="auth changes" />
+    <MESSAGE value="hystrix commands &amp; dashboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="hystrix commands &amp; dashboard" />
   </component>
 </project>
