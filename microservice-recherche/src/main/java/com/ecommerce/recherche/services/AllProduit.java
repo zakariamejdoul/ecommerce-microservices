@@ -1,11 +1,14 @@
 package com.ecommerce.recherche.services;
 
 import com.ecommerce.recherche.dao.ProduitDaoCls;
+import com.ecommerce.recherche.moduls.produit;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
 
 @Service
 public class AllProduit {
@@ -20,7 +23,8 @@ public class AllProduit {
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
     public ProduitDaoCls getAllProduits() {
-        return restTemplate.getForObject("http://Produit/AllProduit/", ProduitDaoCls.class);
+        ProduitDaoCls allProduit = restTemplate.getForObject("http://microservice-produit/produit/AllProducts", ProduitDaoCls.class);
+        return allProduit;
     }
 
     public ProduitDaoCls FallBackProduit() {
