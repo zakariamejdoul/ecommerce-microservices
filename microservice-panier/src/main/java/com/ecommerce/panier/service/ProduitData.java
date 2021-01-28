@@ -20,12 +20,12 @@ public class ProduitData {
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
-    public produit getForProduit(String id) {
-        return restTemplate.getForObject("http://Rechercher/recherche/byid/" + id, produit.class);
+    public Produit getForProduit(String id) {
+        return restTemplate.getForObject("http://Rechercher/recherche/byid/" + id, Produit.class);
     }
 
-    public produit getFallBackProduit(String id) {
-        produit p = new produit();
+    public Produit getFallBackProduit(String id) {
+        Produit p = new Produit();
         p.setId(id);
         return p;
 
