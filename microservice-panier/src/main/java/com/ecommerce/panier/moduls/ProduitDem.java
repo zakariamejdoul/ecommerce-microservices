@@ -8,6 +8,7 @@ public class ProduitDem {
     public ProduitDem(String id, int quantite_panier) {
         this.id = id;
         this.quantite_panier = quantite_panier;
+
     }
 
     public ProduitDem() {
