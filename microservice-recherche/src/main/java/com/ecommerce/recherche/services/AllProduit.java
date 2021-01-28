@@ -39,6 +39,7 @@ public class AllProduit {
         ArrayList<produit> produits = Response.getBody();
 
         produitDao.setProduits(produits);
+
     }
 
     public ProduitDaoCls FallBackProduit() {
