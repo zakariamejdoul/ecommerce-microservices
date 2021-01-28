@@ -2,12 +2,14 @@ package com.ecommerce.promotion.web.controller;
 
 
 import com.ecommerce.promotion.dao.PromotionDao;
+import com.ecommerce.promotion.model.Produit;
 import com.ecommerce.promotion.model.Promotion;
 //import jdk.jfr.internal.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,15 @@ public class PromotionControll {
     @Autowired
     private PromotionDao promotionDao;
 
-    @PostMapping(path="/add")
-    public ResponseEntity<Promotion> addNewPromotion(@RequestBody Promotion promotion){
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @PostMapping(path="/add/{idProduit}")
+    public ResponseEntity<Promotion> addNewPromotion(@RequestBody Promotion promotion,@PathVariable("idProduit") long id) {
+        Produit p = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/"+id, Produit.class);
         try {
-            Promotion _promotion = promotionDao.save(new Promotion(promotion.getProduct_id(),promotion.getStart_date(), promotion.getEnd_date(),promotion.getTaxe() ));
+            double  prixinit= p.getPrix();
+            Promotion _promotion = promotionDao.save(new Promotion(id,promotion.getStart_date(), promotion.getEnd_date(),promotion.getTaxe(),prixinit-(prixinit* promotion.getTaxe())));
             return new ResponseEntity<>(_promotion, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
