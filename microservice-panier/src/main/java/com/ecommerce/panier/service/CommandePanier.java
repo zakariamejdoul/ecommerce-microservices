@@ -1,6 +1,6 @@
 package com.ecommerce.panier.service;
 
-import com.ecommerce.panier.moduls.commande;
+import com.ecommerce.panier.moduls.ProduitDem;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,21 +8,21 @@ import java.util.ArrayList;
 @Service
 public class CommandePanier {
 
-    private ArrayList<commande> commandes = new ArrayList<>();
+    private ArrayList<ProduitDem> ProduitDems = new ArrayList<>();
 
 
-    public void ajouter(commande commande) {
-        this.commandes.add(commande);
+    public void ajouter(ProduitDem ProduitDem) {
+        this.ProduitDems.add(ProduitDem);
     }
 
-    public ArrayList<commande> getCommandes() {
-        return commandes;
+    public ArrayList<ProduitDem> getCommandes() {
+        return ProduitDems;
     }
 
     public void supprimer(String id) {
-        for (commande c:commandes) {
+        for (ProduitDem c: ProduitDems) {
             if (c.getId().equals(id)){
-                commandes.remove(c);
+                ProduitDems.remove(c);
                 break;
             }
         }

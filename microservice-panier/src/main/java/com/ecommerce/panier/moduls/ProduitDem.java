@@ -1,15 +1,16 @@
 package com.ecommerce.panier.moduls;
 
-public class commande {
+public class ProduitDem {
     private String id;
     private int quantite_panier;
 
-    public commande(String id, int quantite_panier) {
+
+    public ProduitDem(String id, int quantite_panier) {
         this.id = id;
         this.quantite_panier = quantite_panier;
     }
 
-    public commande() {
+    public ProduitDem() {
     }
 
     public String getId() {
