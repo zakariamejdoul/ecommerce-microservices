@@ -3,48 +3,58 @@ package com.ecommerce.commande.model;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class CommandeProxy {
     @Autowired
     private RestTemplate restTemplate;
 
-
-    @GetMapping(value = "/commande/{id}")
-    public Commande getCommande(@PathVariable int id){
-        return new Commande(id, "12/04/2020", Boolean.FALSE,Boolean.TRUE);
-    }
-
     private Integer prixLivraison=10;
 
-    @HystrixCommand(fallbackMethod = "getFallBackQuantite", commandProperties = {
+    @HystrixCommand(fallbackMethod = "getFallBackCalculPrix", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
-    public Integer calculPrix(){
-        Commande commande = getCommande(5);
-        //liste des prix (product*qnt) de la commande num id depuis microservices panier
-        ProduitDem produitDem = restTemplate.getForObject("microservice-panier/panier/commanderPanier",ProduitDem.class);
+    public Integer calculPrix(Commande commande){
+        //liste des produits demandes (productid & qnt) de la commande depuis microservices panier
+        /*ResponseEntity<ArrayList<ProduitDem>> Response =
+                restTemplate.exchange("microservice-panier/panier/commanderPanier",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<ArrayList<ProduitDem>>() {
+                        });
+        ArrayList<ProduitDem> panier = Response.getBody();*/
 
-        // la promotion d un produit depuis microservices promotion
-        Integer pricePromoted = restTemplate.getForObject("microservice-promotion/promotion/"+produitDem.getId(),Integer.class);
+        ProduitDem p1 = new ProduitDem("1",5);
+        ProduitDem p2 = new ProduitDem("2",4);
+        ArrayList<ProduitDem> panier =new ArrayList<>();
+        panier.add(p1);
+        panier.add(p2);
+
+        // la promotion d un produit depuis microservices promotion et combinaison des deux
+        /*for(int i = 0; i < panier.size(); i++)
+            panier.get(i).setPrice_promoted(restTemplate.getForObject("http://microservice-promotion/add/" + panier.get(i).getId(), Integer.class));*/
+
+        for (ProduitDem produitDem : panier) produitDem.setPrice_promoted(5);
 
         //combinaison des deux
-        List<Integer> products = Arrays.asList(); // (prix ou prixpromted) *quantite
-        products.add((produitDem.getQuantite_panier()*pricePromoted));
+        ArrayList<Integer> products = new ArrayList<>();
+        for (ProduitDem produitDem : panier)
+            products.add((produitDem.getQuantite_panier() * produitDem.getPrice_promoted()));
 
         //la somme des prix
         Integer sum = products.stream()
                 .reduce(0, Integer::sum);
+
+
         if(commande.getLivrable()) {
             return sum + prixLivraison;
         }else{
@@ -52,7 +62,7 @@ public class CommandeProxy {
         }
     }
 
-    public Integer getFallBackCalculPrix(){
+    public Integer getFallBackCalculPrix(Commande commande){
         return 0;
     }
 }
