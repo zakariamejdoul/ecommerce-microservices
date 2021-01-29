@@ -12,11 +12,12 @@ public class Promotion {
     private long id;
 
     @Column(unique=true)
-    private int product_id;
+    private long product_id;
 
     private Date start_date;
     private Date end_date;
     private double taxe;
+    private double prixPromoted;
 
     public Promotion() {
     }
@@ -27,11 +28,19 @@ public class Promotion {
         this.taxe = taxe;
     }
 
-    public Promotion(int product_id, Date start_date, Date end_date, double taxe) {
+    public Promotion(long product_id, Date start_date, Date end_date, double taxe) {
         this.product_id = product_id;
         this.start_date = start_date;
         this.end_date = end_date;
         this.taxe = taxe;
+    }
+
+    public Promotion(long product_id, Date start_date, Date end_date, double taxe, double prixPromoted) {
+        this.product_id = product_id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.taxe = taxe;
+        this.prixPromoted = prixPromoted;
     }
 
     public long getId() {
@@ -50,11 +59,11 @@ public class Promotion {
         return taxe;
     }
 
-    public int getProduct_id() {
+    public long getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(long product_id) {
         this.product_id = product_id;
     }
 
@@ -72,6 +81,14 @@ public class Promotion {
 
     public void setTaxe(double taxe) {
         this.taxe = taxe;
+    }
+
+    public double getPrixPromoted() {
+        return prixPromoted;
+    }
+
+    public void setPrixPromoted(double prixPromoted) {
+        this.prixPromoted = prixPromoted;
     }
 
     @Override
