@@ -12,7 +12,7 @@ public class Produit {
     private Integer quantite;
 
     // Constructor
-    public Produit( String id,String titre, String description, Integer prix, String ville, String categorie, String date) {
+    public Produit( String id,String titre, String description, Integer prix, String ville, String categorie, String date, Integer quantite) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -20,6 +20,7 @@ public class Produit {
         this.ville = ville;
         this.categorie = categorie;
         this.date = date;
+        this.quantite=quantite;
     }
 
     public Produit() {

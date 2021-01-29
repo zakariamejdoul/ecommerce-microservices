@@ -2,19 +2,18 @@ package com.ecommerce.stock.web.controller;
 
 import com.ecommerce.stock.model.StockProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/stock")
 public class StockController {
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     @Autowired
     public StockProxy stockProxy;
 
-    @GetMapping(value = "/stock/{productId}")
+    @RequestMapping("/{productId}")
     public String notify(@PathVariable("productId") String productId) {
         if(stockProxy.getProduct(productId).estEpuise()){
             return "Ok";
@@ -23,7 +22,7 @@ public class StockController {
         }
     }
 
-    @GetMapping(value = "/id/{productId}/quantite/{q}")
+    @RequestMapping("/id/{productId}/quantite/{q}")
     public Boolean estSuffisant(@PathVariable("productId") String productId,@PathVariable("q") Integer q){
         return (stockProxy.getProduct(productId).getQuantite() - q) >= 0;
     }
