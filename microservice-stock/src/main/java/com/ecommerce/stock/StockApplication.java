@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableHystrixDashboard
+
 public class StockApplication {
     @LoadBalanced
 

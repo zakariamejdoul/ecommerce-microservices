@@ -8,14 +8,14 @@ public class Commande {
     public Commande() {
     }
 
-    public Commande(int id, String dateCommande, Boolean commandePayee, Boolean livrable) {
+    public Commande(Integer id, String dateCommande, Boolean commandePayee, Boolean livrable) {
         this.id = id;
         this.dateCommande = dateCommande;
         this.commandePayee = commandePayee;
         this.livrable=livrable;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
