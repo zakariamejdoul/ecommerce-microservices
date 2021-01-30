@@ -37,6 +37,21 @@ public class PromotionControll {
         }
     }
 
+    @GetMapping(path="/prixprmoted/{idProduit}")
+    public double PrixPrmotedByID(@PathVariable("idProduit") long id){
+        double prixpromoted=0;
+        List<Promotion> promotions = new ArrayList<Promotion>();
+        promotions.addAll(promotionDao.findAll());
+        Produit pd = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/"+id, Produit.class);
+        for (Promotion p : promotions ){
+            if (pd.getId()==p.getProduct_id()){
+                prixpromoted= p.getPrixPromoted();
+            }
+        }
+        return prixpromoted;
+    }
+
+
     @GetMapping(path = "/all")
     public ResponseEntity<List<Promotion>>  getAllPromotions(){
         try {
