@@ -19,9 +19,9 @@ public class CommandePanier {
         return ProduitDems;
     }
 
-    public void supprimer(String id) {
+    public void supprimer(long id) {
         for (ProduitDem c: ProduitDems) {
-            if (c.getId().equals(id)){
+            if ( c.getId() == id) {
                 ProduitDems.remove(c);
                 break;
             }

@@ -1,11 +1,11 @@
 package com.ecommerce.panier.moduls;
 
 public class ProduitDem {
-    private String id;
+    private long id;
     private int quantite_panier;
 
 
-    public ProduitDem(String id, int quantite_panier) {
+    public ProduitDem(long id, int quantite_panier) {
         this.id = id;
         this.quantite_panier = quantite_panier;
 
@@ -14,11 +14,11 @@ public class ProduitDem {
     public ProduitDem() {
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

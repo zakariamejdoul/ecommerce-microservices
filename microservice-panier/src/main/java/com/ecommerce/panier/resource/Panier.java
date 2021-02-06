@@ -35,20 +35,20 @@ public class Panier {
     CommandePanier commandePanier;
 
     @RequestMapping("/ajouterproduit/{id}/quantite/{quantite}")
-    public ArrayList<produit> ajouter_produit(@PathVariable("id") String id, @PathVariable("quantite") int quantite) {
+    public ArrayList<produit> ajouter_produit(@PathVariable("id") long id, @PathVariable("quantite") int quantite) {
 
         // Stock
         Boolean quantitedisponible = quantiteInStock.getForQuantite(id, quantite);
 
         if (quantitedisponible){
-            produit p = produitData.getForProduit(id);
-            p.setQuantite_panier(quantite);
+            produit p = produitData.getForProduit(id,quantite);
 
-            commandePanier.ajouter(new ProduitDem(id,quantite));
+            //commandePanier.ajouter(new ProduitDem(id,quantite));
 
-            return panierDao.ajouterProduit(p,quantite);
+            return panierDao.ajouterProduit(p);
         }else {
-            return panierDao.afficherPanier();
+            produit p = produitData.getForProduit(id,-1);
+            return panierDao.ajouterProduit(p);
         }
 
 
@@ -65,7 +65,7 @@ public class Panier {
     }
 
     @RequestMapping("/supprimerproduit/{id}")
-    public ArrayList<produit> supprimer_produit(@PathVariable("id") String id) {
+    public ArrayList<produit> supprimer_produit(@PathVariable("id") long id) {
 
         commandePanier.supprimer(id);
 

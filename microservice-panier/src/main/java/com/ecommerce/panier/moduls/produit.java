@@ -2,17 +2,17 @@ package com.ecommerce.panier.moduls;
 
 public class produit {
 
-    private String id;
+    private long id;
     private String titre;
     private String description;
-    private String prix;
+    private double prix;
     private String ville;
     private String categorie;
     private String date;
     private int quantite_panier;
 
     // Constructor
-    public produit(String id, String titre, String description, String prix, String ville, String categorie, String date) {
+    public produit(long id, String titre, String description, double prix, String ville, String categorie, String date) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -26,11 +26,11 @@ public class produit {
     }
 
     // Getters & setters
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -50,11 +50,11 @@ public class produit {
         this.description = description;
     }
 
-    public String getPrix() {
+    public double getPrix() {
         return prix;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 

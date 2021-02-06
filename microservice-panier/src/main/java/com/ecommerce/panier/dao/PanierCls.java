@@ -20,18 +20,18 @@ public class PanierCls implements PanierDao{
     }
 
     @Override
-    public ArrayList<produit> ajouterProduit(produit p,int quantite) {
+    public ArrayList<produit> ajouterProduit(produit p) {
 
         ListPannier.add(p);
         return ListPannier;
     }
 
     @Override
-    public ArrayList<produit> supprimerProduit(String id) {
+    public ArrayList<produit> supprimerProduit(long id) {
 
         for (produit p:ListPannier
              ) {
-            if (p.getId().equals(id)){
+            if (p.getId() == id){
                 ListPannier.remove(p);
                 break;
             }

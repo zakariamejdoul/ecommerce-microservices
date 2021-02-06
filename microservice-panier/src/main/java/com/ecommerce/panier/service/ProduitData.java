@@ -1,5 +1,6 @@
 package com.ecommerce.panier.service;
 
+import com.ecommerce.panier.moduls.ProduitDem;
 import com.ecommerce.panier.moduls.produit;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -13,6 +14,9 @@ public class ProduitData {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    CommandePanier commandePanier;
+
 
     @HystrixCommand(fallbackMethod = "getFallBackProduit", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
@@ -20,13 +24,19 @@ public class ProduitData {
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
-    public produit getForProduit(String id) {
-        return restTemplate.getForObject("http://Rechercher/recherche/byid/" + id, produit.class);
+    public produit getForProduit(long id, int quantite) {
+
+        produit p = restTemplate.getForObject("http://microservice-recherche/recherche/byid/" + id, produit.class);
+        p.setQuantite_panier(quantite);
+        commandePanier.ajouter(new ProduitDem(id,quantite));
+        return p;
     }
 
-    public produit getFallBackProduit(String id) {
+    public produit getFallBackProduit(long id, int quantite) {
         produit p = new produit();
         p.setId(id);
+        p.setTitre("Produit n'est pas dispo");
+        p.setQuantite_panier(0);
         return p;
 
     }

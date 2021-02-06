@@ -18,11 +18,11 @@ public class QuantiteInStock {
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
-    public Boolean getForQuantite(String id, int quantite) {
-        return restTemplate.getForObject("http://Stock/id/" + id + "/quantite/" + quantite, Boolean.class);
+    public Boolean getForQuantite(long id, int quantite) {
+        return restTemplate.getForObject("http://microservice-stock/stock/id/" + id + "/quantite/" + quantite, Boolean.class);
     }
 
-    public Boolean getFallBackQuantite(String id, int quantite) {
+    public Boolean getFallBackQuantite(long id, int quantite) {
         return false;
     }
 }
