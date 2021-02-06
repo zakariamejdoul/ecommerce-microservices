@@ -1,6 +1,5 @@
 package com.ecommerce.stock.web.controller;
 
-import com.ecommerce.stock.model.Produit;
 import com.ecommerce.stock.model.StockProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +24,6 @@ public class StockController {
 
     @RequestMapping("/id/{productId}/quantite/{q}")
     public Boolean estSuffisant(@PathVariable("productId") long productId,@PathVariable("q") int q){
-        System.out.println(stockProxy.getProduct(productId).getQuantite());
         return (stockProxy.getProduct(productId).getQuantite() - q) >= 0;
     }
 
