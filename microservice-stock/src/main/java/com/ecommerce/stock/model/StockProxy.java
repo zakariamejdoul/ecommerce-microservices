@@ -17,12 +17,12 @@ public class StockProxy {
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
-    public Produit getProduct(String productId){
-        //return restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + productId, Produit.class);
-        return new Produit(productId,"PC", "desc", 3000, "Oujda","info","25/01/2020",5);
+    public Produit getProduct(long productId){
+        return restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + productId, Produit.class);
+        //return new Produit(productId,"PC", "desc", 3000, "Oujda","info","25/01/2020",5);
     }
 
-    public Produit getFallBackProduct(String productId){
+    public Produit getFallBackProduct(long productId){
         return new Produit(productId,"no value", "no value", 0, "no value","no value","no value",0);
     }
 

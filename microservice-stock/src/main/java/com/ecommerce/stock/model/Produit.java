@@ -2,17 +2,17 @@ package com.ecommerce.stock.model;
 
 public class Produit {
 
-    private String id;
+    private long id;
     private String titre;
     private String description;
-    private Integer prix;
+    private double prix;
     private String ville;
     private String categorie;
     private String date;
-    private Integer quantite;
+    private int quantite;
 
     // Constructor
-    public Produit( String id,String titre, String description, Integer prix, String ville, String categorie, String date, Integer quantite) {
+    public Produit( long id,String titre, String description, double prix, String ville, String categorie, String date, int quantite) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -27,13 +27,11 @@ public class Produit {
     }
 
     // Getters & setters
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id; }
 
     public String getTitre() {
         return titre;
@@ -51,11 +49,9 @@ public class Produit {
         this.description = description;
     }
 
-    public Integer getPrix() {
-        return prix;
-    }
+    public double getPrix() { return prix; }
 
-    public void setPrix(Integer prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 
@@ -83,11 +79,11 @@ public class Produit {
         this.date = date;
     }
 
-    public Integer getQuantite() {
+    public int getQuantite() {
         return quantite;
     }
 
-    public void setQuantite(Integer quantite) {
+    public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
 
