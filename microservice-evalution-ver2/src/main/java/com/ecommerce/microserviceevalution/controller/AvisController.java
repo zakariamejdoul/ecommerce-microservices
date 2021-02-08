@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -102,11 +103,8 @@ public class AvisController {
                 HttpMethod.GET,
                 entity,
                 String.class);
-        if (response == null) {
-            return ResponseEntity.badRequest().body("Unauthorized access !");
-        } else {
-            return ResponseEntity.ok(response.getBody());
-        }
+
+        return ResponseEntity.ok(Objects.requireNonNull(response.getBody()));
 
 
     }
