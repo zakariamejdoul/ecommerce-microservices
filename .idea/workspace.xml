@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a77a2924-7252-45c8-9af3-0592d5c1c50c" name="Default Changelist" comment="connection between auth/signin &amp; client/username">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/resources/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/resources/META-INF/additional-spring-configuration-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice-auth/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservice-auth/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +153,7 @@
       <workItem from="1609603412336" duration="23711000" />
       <workItem from="1611587284875" duration="6068000" />
       <workItem from="1611760088125" duration="18093000" />
-      <workItem from="1611785610328" duration="1455000" />
+      <workItem from="1611785610328" duration="1804000" />
     </task>
     <task id="LOCAL-00001" summary="properties">
       <created>1609447183417</created>
@@ -269,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611782632879</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="hystrix configs">
+      <created>1611787367882</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1611787367882</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,6 +316,7 @@
     <MESSAGE value="eureka discovery server &amp; load-balancing changes" />
     <MESSAGE value="auth changes" />
     <MESSAGE value="hystrix commands &amp; dashboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="hystrix commands &amp; dashboard" />
+    <MESSAGE value="hystrix configs" />
+    <option name="LAST_COMMIT_MESSAGE" value="hystrix configs" />
   </component>
 </project>
