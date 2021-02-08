@@ -64,7 +64,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     @HystrixCommand(fallbackMethod = "fallbackRegistering", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"),
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
     })
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         HttpHeaders headers = new HttpHeaders();
