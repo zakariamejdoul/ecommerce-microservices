@@ -1,4 +1,4 @@
-package com.ecommerce.panier.service;
+package com.ecommerce.panier.moduls;
 
 import com.ecommerce.panier.moduls.ProduitDem;
 import org.springframework.stereotype.Service;

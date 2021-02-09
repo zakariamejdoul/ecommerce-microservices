@@ -1,5 +1,6 @@
 package com.ecommerce.panier.service;
 
+import com.ecommerce.panier.moduls.CommandePanier;
 import com.ecommerce.panier.moduls.ProduitDem;
 import com.ecommerce.panier.moduls.produit;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

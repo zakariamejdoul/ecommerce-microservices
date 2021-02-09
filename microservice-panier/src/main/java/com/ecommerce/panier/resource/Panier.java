@@ -2,8 +2,7 @@ package com.ecommerce.panier.resource;
 
 
 import com.ecommerce.panier.dao.PanierDao;
-import com.ecommerce.panier.service.CommandePanier;
-import com.ecommerce.panier.moduls.ProduitDem;
+import com.ecommerce.panier.moduls.CommandePanier;
 import com.ecommerce.panier.moduls.produit;
 import com.ecommerce.panier.service.ProduitData;
 import com.ecommerce.panier.service.QuantiteInStock;
