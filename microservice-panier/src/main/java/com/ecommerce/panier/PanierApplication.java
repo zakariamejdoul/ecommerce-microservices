@@ -15,7 +15,7 @@ public class PanierApplication {
     public RestTemplate getRestTemlate(){
         // timeout
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        clientHttpRequestFactory.setConnectTimeout(3000);
+        clientHttpRequestFactory.setConnectTimeout(5000);
         return new RestTemplate(clientHttpRequestFactory);
     }
 
