@@ -18,8 +18,8 @@ public class StockProxy {
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
     public Produit getProduct(long productId){
-        return restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + productId, Produit.class);
-        //return new Produit(productId,"PC", "desc", 3000, "Oujda","info","25/01/2020",5);
+        //return restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + productId, Produit.class);
+        return new Produit(productId,"PC", "desc", 3000, "Oujda","info","25/01/2020",5);
     }
 
     public Produit getFallBackProduct(long productId){
