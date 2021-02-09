@@ -4,7 +4,8 @@ package com.ecommerce.recherche.resource;
 import com.ecommerce.recherche.moduls.ListeProduits;
 import com.ecommerce.recherche.moduls.produit;
 import com.ecommerce.recherche.services.AllProduit;
-import com.ecommerce.recherche.services.ChercheByID;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 @RequestMapping("/recherche")
 public class Recherche {
 
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private ListeProduits listeProduits;
@@ -24,8 +27,31 @@ public class Recherche {
     @Autowired
     private AllProduit allProduit;
 
-    @Autowired
-    private ChercheByID chercheByID;
+
+
+    @RequestMapping("/byid/{id}")
+    @HystrixCommand(fallbackMethod = "getFallBackProduitByID", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3000"),
+
+    })
+    public produit getProduitById(@PathVariable("id") long id) {
+
+        produit p = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + id, produit.class);
+        return p;
+
+        //return chercheByID.rechercheByID(id);
+
+    }
+
+    public produit getFallBackProduitByID(long id) {
+
+        produit p = new produit();
+        p.setTitre("Pas Des Produits !");
+        p.setId(id);
+
+        return p;
+
+    }
 
     @RequestMapping("/byname/{name}")
     public ArrayList<produit> getProduitByNama(@PathVariable("name") String name) {
@@ -83,12 +109,7 @@ public class Recherche {
 
     }
 
-    @RequestMapping("/byid/{id}")
-    public produit getProduitById(@PathVariable("id") long id) {
 
-        return chercheByID.rechercheByID(id);
-
-    }
 
 
 }
