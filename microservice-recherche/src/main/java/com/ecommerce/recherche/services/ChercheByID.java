@@ -25,15 +25,15 @@ public class ChercheByID {
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
     public produit rechercheByID(long id) {
-        return restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + id, produit.class);
-
+        produit p = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + id, produit.class);
+        return p;
     }
 
-    public produit getFallBackProduitByID() {
+    public produit getFallBackProduitByID(long id) {
 
         produit p = new produit();
         p.setTitre("Pas Des Produits !");
-        p.setId(0);
+        p.setId(id);
 
         return p;
 

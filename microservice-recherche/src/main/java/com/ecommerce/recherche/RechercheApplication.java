@@ -10,16 +10,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 public class RechercheApplication {
-
+    @LoadBalanced
 
     @Bean
-    @LoadBalanced
     public RestTemplate getRestTemlate(){
         // Timeout
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        clientHttpRequestFactory.setConnectTimeout(3000);
+        clientHttpRequestFactory.setConnectTimeout(5000);
         return new RestTemplate(clientHttpRequestFactory);
     }
+
 
     public static void main(String[] args) {
         SpringApplication.run(RechercheApplication.class, args);
