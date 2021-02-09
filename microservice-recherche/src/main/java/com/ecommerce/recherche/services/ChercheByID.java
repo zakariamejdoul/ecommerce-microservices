@@ -18,8 +18,7 @@ public class ChercheByID {
     @Autowired
     private RestTemplate restTemplate;
 
-
-    @HystrixCommand(fallbackMethod = "FallBackProduitByID", commandProperties = {
+    @HystrixCommand(fallbackMethod = "getFallBackProduitByID", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
@@ -30,7 +29,7 @@ public class ChercheByID {
 
     }
 
-    public produit FallBackProduitByID() {
+    public produit getFallBackProduitByID() {
 
         produit p = new produit();
         p.setTitre("Pas Des Produits !");
