@@ -2,7 +2,7 @@ package com.ecommerce.recherche.moduls;
 
 public class produit {
 
-    private String id;
+    private long id;
     private String titre;
     private String description;
     private double prix;
@@ -11,7 +11,7 @@ public class produit {
     private String date;
 
     // Constructor
-    public produit( String id,String titre, String description, double prix, String ville, String categorie, String date) {
+    public produit( long id,String titre, String description, double prix, String ville, String categorie, String date) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -25,11 +25,11 @@ public class produit {
     }
 
     // Getters & setters
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
