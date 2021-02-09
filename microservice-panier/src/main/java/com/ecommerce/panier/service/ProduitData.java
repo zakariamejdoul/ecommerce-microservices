@@ -16,24 +16,23 @@ public class ProduitData {
     private RestTemplate restTemplate;
 
     @Autowired
-    CommandePanier commandePanier;
+    private CommandePanier commandePanier;
 
 
-    @HystrixCommand(fallbackMethod = "getFallBackProduit", commandProperties = {
+    @HystrixCommand(fallbackMethod = "getFallBackGetProduit", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
     public produit getForProduit(long id, int quantite) {
-
         produit p = restTemplate.getForObject("http://microservice-recherche/recherche/byid/" + id, produit.class);
         p.setQuantite_panier(quantite);
         commandePanier.ajouter(new ProduitDem(id,quantite));
         return p;
     }
 
-    public produit getFallBackProduit(long id, int quantite) {
+    public produit getFallBackGetProduit(long id, int quantite) {
         produit p = new produit();
         p.setId(id);
         p.setTitre("Produit n'est pas dispo");
