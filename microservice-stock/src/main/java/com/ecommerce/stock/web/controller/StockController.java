@@ -15,7 +15,7 @@ public class StockController {
 
     @RequestMapping("/{productId}")
     public String notify(@PathVariable("productId") long productId) {
-        if(stockProxy.getProduct(productId).estEpuise()){
+        if(stockProxy.getProduct(productId).getQuantite() <= 0){
             return "Stock epuisé";
         }else{
             return "Ok, le stock est suffisant";

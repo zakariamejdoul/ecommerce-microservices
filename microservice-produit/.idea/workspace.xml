@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a3e4565-80ed-4789-be67-e1ad22bda4dc" name="Default Changelist" comment="" />
+    <list default="true" id="8a3e4565-80ed-4789-be67-e1ad22bda4dc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservice-stock/src/main/java/com/ecommerce/stock/StockApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservice-stock/src/main/java/com/ecommerce/stock/StockApplication.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,12 +23,30 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.MicroserviceProduitApplication">
+    <configuration name="MicroserviceProduitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="microservice-produit" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecommerce.microserviceproduit.MicroserviceProduitApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProduitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="microservice-produit" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecommerce.produit.ProduitApplication" />
@@ -43,6 +64,9 @@
       <option name="presentableId" value="Default" />
       <updated>1609430534807</updated>
       <workItem from="1609430535892" duration="79000" />
+      <workItem from="1612874198250" duration="1305000" />
+      <workItem from="1612877914026" duration="913000" />
+      <workItem from="1612880800740" duration="1608000" />
     </task>
     <servers />
   </component>
@@ -59,5 +83,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

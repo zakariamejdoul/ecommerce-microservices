@@ -25,7 +25,7 @@ public class StockApplication {
     public RestTemplate getRestTemlate(){
         // timeout
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        clientHttpRequestFactory.setConnectTimeout(1000);
+        clientHttpRequestFactory.setConnectTimeout(3000);
         return new RestTemplate(clientHttpRequestFactory);
     }
 
