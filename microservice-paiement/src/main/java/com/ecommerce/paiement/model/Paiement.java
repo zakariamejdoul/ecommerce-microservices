@@ -14,8 +14,10 @@ public class Paiement {
     @Column(unique = true)
     private Integer idCommande;
 
+
     private Integer montant;
     private Long numeroCarte;
+    private Boolean commandePayee;
 
     public Paiement() {
     }
@@ -31,6 +33,13 @@ public class Paiement {
         this.idCommande = idCommande;
         this.montant = montant;
         this.numeroCarte = numeroCarte;
+    }
+
+    public Paiement(Integer idCommande, Integer montant, Long numeroCarte, Boolean commandePayee) {
+        this.idCommande = idCommande;
+        this.montant = montant;
+        this.numeroCarte = numeroCarte;
+        this.commandePayee = commandePayee;
     }
 
     public int getId() {
@@ -64,6 +73,10 @@ public class Paiement {
     public void setNumeroCarte(Long numeroCarte) {
         this.numeroCarte = numeroCarte;
     }
+
+    public Boolean getCommandePayee() {return commandePayee;}
+
+    public void setCommandePayee(Boolean commandePayee) { this.commandePayee = commandePayee; }
 
     @Override
     public String toString() {
