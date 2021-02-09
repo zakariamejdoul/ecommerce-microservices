@@ -11,7 +11,6 @@ public class Avis {
     private int idProduit;
     private String designation;
     private String avis;
-    private String idClient;
     private String username;
 
     public Avis(){
@@ -22,7 +21,6 @@ public class Avis {
         this.username = username;
         this.designation = designation;
         this.avis = avis;
-        this.idClient = idClient;
         this.idProduit = idProduit;
     }
 
@@ -58,14 +56,6 @@ public class Avis {
         this.avis = avis;
     }
 
-    public String getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(String idClient) {
-        this.idClient = idClient;
-    }
-
     public int getIdProduit() {
         return idProduit;
     }
@@ -81,7 +71,6 @@ public class Avis {
                 ", username='" + username + '\'' +
                 ", designation='" + designation + '\'' +
                 ", avis='" + avis + '\'' +
-                ", idClient=" + idClient +
                 ", idProduit=" + idProduit +
 
                 '}';

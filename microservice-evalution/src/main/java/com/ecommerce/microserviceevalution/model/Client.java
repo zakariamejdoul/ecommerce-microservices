@@ -1,24 +1,20 @@
-package com.ecommerce.microserviceevalution.model;
+package com.ecommerce.client.model;
 
 
-
+import com.ecommerce.microserviceevalution.model.Role;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-
 public class Client {
-
 
     private String id;
 
 
     private String username;
 
-
     private String email;
-
 
     private String password;
 

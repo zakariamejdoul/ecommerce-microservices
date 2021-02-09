@@ -12,13 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AvisDao extends JpaRepository<Avis, Long> {
     Iterable<Avis> findAvisByIdProduit(int idProduit);
-    Iterable<Avis> findAvisByIdClient(String idClient);
+    Iterable<Avis> findAvisByUsername(String idClient);
     @Query("select idAvis, username,designation, avis from Avis")
     Iterable<Avis> findIdAvisAndUsernameAndDesignationAndAvis();
 
     Iterable<Avis> findIdAvisAndUsernameAndDesignationAndAvisByIdAvis(long idAvis);
-
-    Iterable<Avis> findIdAvisAndUsernameAndDesignationAndAvisByIdClient(int idClient);
 
     Iterable<Avis> findIdAvisAndUsernameAndDesignationAndAvisByIdProduit(int idProduit);
 

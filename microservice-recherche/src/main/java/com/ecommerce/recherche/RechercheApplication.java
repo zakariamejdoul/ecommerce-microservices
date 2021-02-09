@@ -25,4 +25,5 @@ public class RechercheApplication {
         SpringApplication.run(RechercheApplication.class, args);
     }
 
+
 }
