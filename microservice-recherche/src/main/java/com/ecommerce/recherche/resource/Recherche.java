@@ -1,9 +1,10 @@
 package com.ecommerce.recherche.resource;
 
-import com.ecommerce.recherche.dao.ProduitDao;
-import com.ecommerce.recherche.dao.ProduitDaoCls;
+
+import com.ecommerce.recherche.moduls.ListeProduits;
 import com.ecommerce.recherche.moduls.produit;
 import com.ecommerce.recherche.services.AllProduit;
+import com.ecommerce.recherche.services.ChercheByID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,17 +19,28 @@ public class Recherche {
 
 
     @Autowired
-    private ProduitDao produitDao;
+    private ListeProduits listeProduits;
 
     @Autowired
-    AllProduit allProduit;
+    private AllProduit allProduit;
 
+    @Autowired
+    private ChercheByID chercheByID;
 
     @RequestMapping("/byname/{name}")
     public ArrayList<produit> getProduitByNama(@PathVariable("name") String name) {
+
         allProduit.getAllProduits();
 
-        return produitDao.rechercheByName(name);
+        ArrayList<produit> rechercheListe = new ArrayList<>();
+        ArrayList<produit> produits = listeProduits.getProduits();
+
+        for (produit p : produits){
+            if (p.getTitre().toLowerCase().contains(name.toLowerCase())){
+                rechercheListe.add(p);
+            }
+        }
+        return rechercheListe;
 
     }
 
@@ -38,16 +50,43 @@ public class Recherche {
 
         allProduit.getAllProduits();
 
-        return produitDao.rechercheByFilter(ville,categorie);
+        ArrayList<produit> filterListe = new ArrayList<>();
+        ArrayList<produit> produits = listeProduits.getProduits();
+        if (ville.isEmpty() && categorie.equals("Toutes")) {
+            filterListe = produits;
+        } else {
+            if (!ville.isEmpty() && !categorie.equals("Toutes")) {
+                for (produit p : produits) {
+                    if (p.getCategorie().equals(categorie) && p.getVille().toLowerCase().equals(ville.toLowerCase())) {
+                        filterListe.add(p);
+                    }
+                }
+
+            } else if (!ville.isEmpty() && categorie.equals("Toutes")) {
+                for (produit p : produits) {
+                    if (p.getVille().toLowerCase().equals(ville.toLowerCase())) {
+                        filterListe.add(p);
+                    }
+                }
+
+            } else {
+                for (produit p : produits) {
+                    if (p.getCategorie().equals(categorie)) {
+                        filterListe.add(p);
+                    }
+                }
+            }
+
+
+        }
+        return filterListe;
 
     }
 
     @RequestMapping("/byid/{id}")
-    public produit getProduitById(@PathVariable("id") String id) {
+    public produit getProduitById(@PathVariable("id") long id) {
 
-        allProduit.getAllProduits();
-
-        return produitDao.rechercheByID(id);
+        return chercheByID.rechercheByID(id);
 
     }
 

@@ -1,7 +1,6 @@
 package com.ecommerce.recherche.services;
 
-import com.ecommerce.recherche.dao.ProduitDao;
-import com.ecommerce.recherche.dao.ProduitDaoCls;
+import com.ecommerce.recherche.moduls.ListeProduits;
 import com.ecommerce.recherche.moduls.produit;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -22,14 +21,9 @@ public class AllProduit {
     private RestTemplate restTemplate;
 
     @Autowired
-    private ProduitDao produitDao;
+    private ListeProduits listeProduits;
 
-    @HystrixCommand(fallbackMethod = "FallBackProduit", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
-            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
-            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
-            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
-    })
+    @HystrixCommand(fallbackMethod = "FallBackProduit")
     public void getAllProduits() {
 
         ResponseEntity<ArrayList<produit>> Response =
@@ -38,13 +32,20 @@ public class AllProduit {
                         });
         ArrayList<produit> produits = Response.getBody();
 
-        produitDao.setProduits(produits);
+        listeProduits.setProduits(produits);
 
     }
 
-    public ProduitDaoCls FallBackProduit() {
+    public void FallBackProduit() {
 
-        return new ProduitDaoCls();
+        ArrayList<produit> produits = new ArrayList<>();
+
+        produit p = new produit();
+        p.setTitre("Pas Des Produits !");
+        p.setId(0);
+        produits.add(p);
+
+        listeProduits.setProduits(produits);
 
     }
 }

@@ -2,8 +2,7 @@ package com.ecommerce.panier.resource;
 
 
 import com.ecommerce.panier.dao.PanierDao;
-import com.ecommerce.panier.service.CommandePanier;
-import com.ecommerce.panier.moduls.ProduitDem;
+import com.ecommerce.panier.moduls.CommandePanier;
 import com.ecommerce.panier.moduls.produit;
 import com.ecommerce.panier.service.ProduitData;
 import com.ecommerce.panier.service.QuantiteInStock;
@@ -40,15 +39,20 @@ public class Panier {
         // Stock
         Boolean quantitedisponible = quantiteInStock.getForQuantite(id, quantite);
 
-        if (quantitedisponible){
+        if (!quantitedisponible){
             produit p = produitData.getForProduit(id,quantite);
 
             //commandePanier.ajouter(new ProduitDem(id,quantite));
 
             return panierDao.ajouterProduit(p);
         }else {
-            produit p = produitData.getForProduit(id,-1);
-            return panierDao.ajouterProduit(p);
+            ArrayList<produit> produits = new ArrayList<>();
+
+            produit p = new produit();
+            p.setQuantite_panier(-1);
+            p.setId(0);
+            produits.add(p);
+            return produits;
         }
 
 

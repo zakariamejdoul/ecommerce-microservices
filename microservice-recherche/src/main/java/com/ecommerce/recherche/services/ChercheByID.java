@@ -1,44 +1,42 @@
-package com.ecommerce.panier.service;
+package com.ecommerce.recherche.services;
 
-import com.ecommerce.panier.moduls.CommandePanier;
-import com.ecommerce.panier.moduls.ProduitDem;
-import com.ecommerce.panier.moduls.produit;
+import com.ecommerce.recherche.moduls.produit;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+
 @Service
-public class ProduitData {
+public class ChercheByID {
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
-    private CommandePanier commandePanier;
 
-
-    @HystrixCommand(fallbackMethod = "getFallBackGetProduit", commandProperties = {
+    @HystrixCommand(fallbackMethod = "FallBackProduitByID", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
-    public produit getForProduit(long id, int quantite) {
-        produit p = restTemplate.getForObject("http://microservice-recherche/recherche/byid/" + id, produit.class);
-        p.setQuantite_panier(quantite);
-        commandePanier.ajouter(new ProduitDem(id,quantite));
-        return p;
+    public produit rechercheByID(long id) {
+        return restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + id, produit.class);
+
     }
 
-    public produit getFallBackGetProduit(long id, int quantite) {
+    public produit FallBackProduitByID() {
+
         produit p = new produit();
-        p.setId(id);
-        p.setTitre("Produit n'est pas dispo");
-        p.setQuantite_panier(0);
+        p.setTitre("Pas Des Produits !");
+        p.setId(0);
+
         return p;
 
     }
-
 }
