@@ -3,8 +3,10 @@ package com.ecommerce.promotion.web.controller;
 
 import com.ecommerce.promotion.dao.PromotionDao;
 import com.ecommerce.promotion.model.Produit;
+import com.ecommerce.promotion.model.ProduitProxy;
 import com.ecommerce.promotion.model.Promotion;
-//import jdk.jfr.internal.Repository;
+import com.netflix.discovery.DiscoveryClient;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +27,15 @@ public class PromotionControll {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    public ProduitProxy produitProxy;
+
+    private DiscoveryClient discoveryClient;
+
+    @HystrixCommand
     @PostMapping(path="/add/{idProduit}")
     public ResponseEntity<Promotion> addNewPromotion(@RequestBody Promotion promotion,@PathVariable("idProduit") long id) {
-        Produit p = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/"+id, Produit.class);
+        Produit p = produitProxy.getProduit(id);
         try {
             double  prixinit= p.getPrix();
             Promotion _promotion = promotionDao.save(new Promotion(id,promotion.getStart_date(), promotion.getEnd_date(),promotion.getTaxe(),prixinit-(prixinit* promotion.getTaxe())));
@@ -37,14 +45,17 @@ public class PromotionControll {
         }
     }
 
+    @HystrixCommand
     @GetMapping(path="/prixprmoted/{idProduit}")
     public double PrixPrmotedByID(@PathVariable("idProduit") long id){
         double prixpromoted=0;
         List<Promotion> promotions = new ArrayList<Promotion>();
         promotions.addAll(promotionDao.findAll());
-        Produit pd = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/"+id, Produit.class);
+        //Produit pd = produitProxy.getProduit(id);
+        //Produit pd = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/"+id, Produit.class);
         for (Promotion p : promotions ){
-            if (pd.getId()==p.getProduct_id()){
+            //pd.getId()
+            if (id==p.getProduct_id()){
                 prixpromoted= p.getPrixPromoted();
             }
         }
