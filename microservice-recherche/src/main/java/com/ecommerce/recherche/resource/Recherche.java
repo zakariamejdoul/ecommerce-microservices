@@ -39,7 +39,6 @@ public class Recherche {
         produit p = restTemplate.getForObject("http://microservice-produit/produit/chercherProduit/" + id, produit.class);
         return p;
 
-        //return chercheByID.rechercheByID(id);
 
     }
 
@@ -78,17 +77,17 @@ public class Recherche {
 
         ArrayList<produit> filterListe = new ArrayList<>();
         ArrayList<produit> produits = listeProduits.getProduits();
-        if (ville.isEmpty() && categorie.equals("Toutes")) {
+        if (ville.equals("Toutes") && categorie.equals("Toutes")) {
             filterListe = produits;
         } else {
-            if (!ville.isEmpty() && !categorie.equals("Toutes")) {
+            if (!ville.equals("Toutes") && !categorie.equals("Toutes")) {
                 for (produit p : produits) {
                     if (p.getCategorie().equals(categorie) && p.getVille().toLowerCase().equals(ville.toLowerCase())) {
                         filterListe.add(p);
                     }
                 }
 
-            } else if (!ville.isEmpty() && categorie.equals("Toutes")) {
+            } else if (!ville.equals("Toutes") && categorie.equals("Toutes")) {
                 for (produit p : produits) {
                     if (p.getVille().toLowerCase().equals(ville.toLowerCase())) {
                         filterListe.add(p);
