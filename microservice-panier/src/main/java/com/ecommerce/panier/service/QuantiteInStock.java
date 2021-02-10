@@ -13,7 +13,7 @@ public class QuantiteInStock {
     private RestTemplate restTemplate;
 
     @HystrixCommand(fallbackMethod = "getFallBackQuantite", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000"),
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3000"),
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")

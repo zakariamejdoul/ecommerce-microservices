@@ -39,10 +39,9 @@ public class Panier {
         // Stock
         Boolean quantitedisponible = quantiteInStock.getForQuantite(id, quantite);
 
-        if (!quantitedisponible){
+        if (quantitedisponible){
             produit p = produitData.getForProduit(id,quantite);
 
-            //commandePanier.ajouter(new ProduitDem(id,quantite));
 
             return panierDao.ajouterProduit(p);
         }else {
@@ -50,6 +49,7 @@ public class Panier {
 
             produit p = new produit();
             p.setQuantite_panier(-1);
+            p.setTitre("Quantite non disponible");
             p.setId(0);
             produits.add(p);
             return produits;

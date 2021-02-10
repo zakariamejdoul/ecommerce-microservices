@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface AvisDao extends JpaRepository<Avis, Long> {
     Iterable<Avis> findAvisByIdProduit(int idProduit);
     Iterable<Avis> findAvisByUsername(String idClient);
+    Avis findByIdAvis(long id);
     @Query("select idAvis, username,designation, avis from Avis")
     Iterable<Avis> findIdAvisAndUsernameAndDesignationAndAvis();
 

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
+
 @Service
 public class ClientProxy {
     @Autowired
@@ -23,26 +25,25 @@ public class ClientProxy {
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
             })
-    @GetMapping("/userIsAuth")
-    public boolean userIsAuth(@RequestParam("Authorization") String authorization) {
+
+    public ResponseEntity<?> userIsAuth(@RequestParam("Authorization") String authorization) {
         HttpHeaders headers = new HttpHeaders();
 
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization", authorization.trim());
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<Boolean> response = restTemplate.exchange(
+        ResponseEntity<String> response = restTemplate.exchange(
                 "http://microservice-auth/api/test/user",
                 HttpMethod.GET,
                 entity,
-                Boolean.class);
+                String.class);
 
-        return response.getBody();
-
-
+        return ResponseEntity.ok(Objects.requireNonNull(response.getBody()));
     }
 
-    public boolean getuserIsAuthFallBack(String authorization){
-        return false;
+
+    public ResponseEntity<?> getuserIsAuthFallBack(String authorization){
+        return new ResponseEntity<>(HttpStatus.LOCKED);
     }
 
 
