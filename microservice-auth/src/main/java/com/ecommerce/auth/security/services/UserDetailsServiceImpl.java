@@ -25,6 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     @HystrixCommand(fallbackMethod = "fallbackLoadUser", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         HttpHeaders headers = new HttpHeaders();

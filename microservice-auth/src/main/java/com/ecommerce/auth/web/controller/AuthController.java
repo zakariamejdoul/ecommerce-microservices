@@ -65,6 +65,9 @@ public class AuthController {
     @PostMapping("/signup")
     @HystrixCommand(fallbackMethod = "fallbackRegistering", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "5"),
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "50"),
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "5000")
     })
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         HttpHeaders headers = new HttpHeaders();
@@ -79,5 +82,10 @@ public class AuthController {
 
     private ResponseEntity<?> fallbackRegistering(SignUpRequest signUpRequest) {
         return ResponseEntity.ok(new MessageResponse("Timeout ! Try to signup again."));
+    }
+
+    @RequestMapping("/getusername/{token}")
+    public String extractUsername(@PathVariable("token") String token) {
+        return jwtUtils.getUserNameFromJwtToken(token);
     }
 }
