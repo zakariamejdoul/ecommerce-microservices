@@ -27,23 +27,23 @@ public class CommandeProxy {
     })
     public Integer calculPrix(Commande commande){
         //liste des produits demandes (productid & qnt) de la commande depuis microservices panier
-        /*ResponseEntity<ArrayList<ProduitDem>> Response =
-                restTemplate.exchange("microservice-panier/panier/commanderPanier",
+        ResponseEntity<ArrayList<ProduitDem>> Response =
+                restTemplate.exchange("http://microservice-panier/panier/commanderPanier",
                         HttpMethod.GET, null, new ParameterizedTypeReference<ArrayList<ProduitDem>>() {
                         });
-        ArrayList<ProduitDem> panier = Response.getBody();*/
+        ArrayList<ProduitDem> panier = Response.getBody();
 
-        ProduitDem p1 = new ProduitDem("1",5);
+        /*ProduitDem p1 = new ProduitDem("1",5);
         ProduitDem p2 = new ProduitDem("2",4);
         ArrayList<ProduitDem> panier =new ArrayList<>();
         panier.add(p1);
-        panier.add(p2);
+        panier.add(p2);*/
 
         // la promotion d un produit depuis microservices promotion et combinaison des deux
-        /*for(int i = 0; i < panier.size(); i++)
-            panier.get(i).setPrice_promoted(restTemplate.getForObject("http://microservice-promotion/add/" + panier.get(i).getId(), Integer.class));*/
+        for(int i = 0; i < panier.size(); i++)
+            panier.get(i).setPrice_promoted(restTemplate.getForObject("http://microservice-promotion/add/" + panier.get(i).getId(), Integer.class));
 
-        for (ProduitDem produitDem : panier) produitDem.setPrice_promoted(5);
+        /*for (ProduitDem produitDem : panier) produitDem.setPrice_promoted(5);*/
 
         //combinaison des deux
         ArrayList<Integer> products = new ArrayList<>();
